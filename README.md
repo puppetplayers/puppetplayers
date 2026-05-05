@@ -1,2 +1,2 @@
 # puppetplayers.org
-Website
+Professional puppet shows since 1986!
