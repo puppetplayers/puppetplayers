@@ -50,6 +50,9 @@
   <link rel="icon" type="image/png" href="media/puppet_characters.png">
   <link rel="apple-touch-icon" href="media/puppet_characters.png">
 
+  <!-- Preload hero poster — this is the LCP element on mobile -->
+  <link rel="preload" as="image" href="media/frame.webp">
+
   <!-- Google Fonts (non-blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -242,10 +245,13 @@
        right slot (where the CTA lives when scrolled). */
     @media (max-width: 768px) {
       .nav-characters {
-        position: absolute;
-        right: 56px;      /* sit just left of the hamburger */
-        top: 50%;
-        transform: translateY(-50%);
+        /* position:fixed escapes the iOS Safari bug where display:flex ancestors
+           incorrectly act as containing blocks for position:absolute children.
+           top:41px = centre of the 82px mobile nav (min-height, border-box).
+           The animation already includes translateY(-50%) to vertically centre. */
+        position: fixed;
+        right: 56px;
+        top: 41px;
         width: 80px;
         max-height: 44px;
         margin: 0;
@@ -1849,7 +1855,6 @@
 
       .nav-logo {
         font-size: 20px;
-        display: block; /* not flex — avoids iOS treating flex as containing block for abs .nav-characters */
       }
 
       .nav-links {
@@ -2258,10 +2263,12 @@
       .crew-bubble-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      .crew-bubble-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; padding: 0 1rem; }
+      /* justify-items:center shrinks each crew-card to its content width so the
+         portrait stage doesn't need to fight flex centering to stay centred */
+      .crew-bubble-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; padding: 0 1rem; justify-items: center; }
     }
     @media (max-width: 600px) {
-      .crew-bubble-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 0.5rem; padding: 0 0.5rem; }
+      .crew-bubble-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 0.5rem; padding: 0 0.5rem; justify-items: center; }
       /* Clip at the stage level — correct boundary, avoids cutting curtain edges */
       /* display:block overrides flex — avoids iOS Safari flex+overflow:hidden centering bug */
       .crew-portrait-stage { width: min(160px, 43vw); padding-top: 18px; overflow: hidden; display: block; margin: 0 auto; }
