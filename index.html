@@ -244,18 +244,10 @@
     /* On mobile: pull characters out of the logo column and float them to the
        right slot (where the CTA lives when scrolled). */
     @media (max-width: 768px) {
+      /* Hide decorative puppet characters on mobile — eliminates all iOS Safari
+         fixed/flex containing-block bugs and prevents compositing-layer popup artefacts */
       .nav-characters {
-        /* position:fixed escapes the iOS Safari bug where display:flex ancestors
-           incorrectly act as containing blocks for position:absolute children.
-           top:41px = centre of the 82px mobile nav (min-height, border-box).
-           The animation already includes translateY(-50%) to vertically centre. */
-        position: fixed;
-        right: 56px;
-        top: 41px;
-        width: 80px;
-        max-height: 44px;
-        margin: 0;
-        animation: puppetBobMobile 2.8s ease-in-out infinite;
+        display: none;
       }
     }
     @keyframes puppetBobMobile {
@@ -1995,12 +1987,15 @@
         0 22px 44px -18px rgba(0,0,0,0.55),
         0 4px 10px -4px rgba(0,0,0,0.35);
       position: relative;
-      /* translateZ(0) promotes to own GPU layer — prevents scroll ghosting on iOS Safari */
-      transform: rotate(1.2deg) translateZ(0);
+      transform: rotate(1.2deg);
       transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s ease;
+      /* backface-visibility prevents scroll ghosting without the layer-ordering
+         conflicts that will-change/translateZ cause on iOS initial paint */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
     .about-poster figure:hover {
-      transform: rotate(0deg) translateY(-4px) scale(1.015) translateZ(0);
+      transform: rotate(0deg) translateY(-4px) scale(1.015);
       box-shadow:
         0 30px 56px -20px rgba(0,0,0,0.6),
         0 6px 14px -4px rgba(0,0,0,0.4);
@@ -2029,7 +2024,8 @@
       object-fit: cover;
       border-radius: 2px;
       filter: saturate(1.05) contrast(1.02);
-      will-change: transform; /* own GPU layer prevents filter ghosting during scroll */
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     @media (max-width: 720px) {
