@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Puppet Players | Puppet Shows for Schools, Libraries & Events — Utah</title>
-  <meta name="description" content="Professional puppet shows for schools, libraries, assisted living, and events across Utah. 40 years performing, 60,000+ shows. $110 per show, Ogden to Provo. Book online.">
+  <meta name="description" content="Professional puppet shows for schools, libraries, assisted living, and events across Utah. 40 years performing, 60,000+ shows. $110 per show, Ogden to Payson. Book online.">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="The Puppet Players | Puppet Shows for Utah Schools & Events">
-  <meta property="og:description" content="Professional puppet shows for schools, libraries, assisted living, and events. 40 years performing, 60,000+ shows. $110, Ogden to Provo.">
+  <meta property="og:description" content="Professional puppet shows for schools, libraries, assisted living, and events. 40 years performing, 60,000+ shows. $110, Ogden to Payson.">
   <meta property="og:image" content="media/frame.png">
   <meta property="og:url" content="https://puppetplayers.org">
 
@@ -50,10 +50,17 @@
   <link rel="icon" type="image/png" href="media/puppet_characters.png">
   <link rel="apple-touch-icon" href="media/puppet_characters.png">
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts (non-blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500;600&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500;600&family=Josefin+Sans:wght@300;400;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500;600&family=Josefin+Sans:wght@300;400;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500;600&family=Josefin+Sans:wght@300;400;600&display=swap"></noscript>
+
+  <!-- hCaptcha preconnect (improves third-party critical path) -->
+  <link rel="preconnect" href="https://js.hcaptcha.com">
+  <link rel="dns-prefetch" href="https://newassets.hcaptcha.com">
+  <link rel="dns-prefetch" href="https://api.hcaptcha.com">
 
   <style>
     /* CSS Custom Properties - Color Palette */
@@ -771,7 +778,7 @@
       font-size: clamp(2.4rem, 5.2vw, 3.8rem);
       color: var(--brown);
       margin: 0 auto;
-      max-width: 18ch;
+      max-width: 22ch;
       text-align: center;
       line-height: 1.15;
       letter-spacing: -0.005em;
@@ -1766,6 +1773,7 @@
       padding: 100px 0;
       position: relative;
       isolation: isolate;
+      overflow-x: hidden;
     }
     .crew::before {
       content: '';
@@ -2231,11 +2239,12 @@
       .curtain-frame { width: 160px; height: 170px; }
       .crew-bubble { width: 128px; height: 154px; border-width: 3px; }
     }
-    @media (max-width: 420px) {
-      /* Scale stage + curtain by 0.85 so the 200px arch aligns with the 170px bubble */
-      .crew-bubble { width: 170px; height: 204px; border-width: 4px; }
-      .crew-portrait-stage { width: 214px; padding-top: 24px; }
-      .curtain-frame { width: 214px; height: 228px; }
+    @media (max-width: 380px) {
+      /* Extra-small phones (iPhone SE 375px) — tighten further */
+      .crew-bubble { width: 116px; height: 140px; border-width: 3px; }
+      .crew-portrait-stage { width: 146px; padding-top: 16px; }
+      .curtain-frame { width: 146px; height: 156px; }
+      .crew-bubble-grid { gap: 1.5rem 0.25rem; padding: 0 0.25rem; }
     }
     @media (prefers-reduced-motion: reduce) {
       .crew-bubble { transition: none; animation: none; }
@@ -2280,7 +2289,10 @@
     <div class="nav-container">
       <a href="#" class="nav-logo">
         The Puppet Players
-        <img src="media/puppet_characters.png" class="nav-characters" alt="Puppet characters" loading="eager" decoding="async" width="120" height="60">
+        <picture>
+          <source type="image/webp" srcset="media/puppet_characters.webp">
+          <img src="media/puppet_characters.png" class="nav-characters" alt="Puppet characters" loading="eager" decoding="async" width="120" height="60">
+        </picture>
       </a>
       <a href="#contact" class="nav-cta-mobile" aria-label="Request a show">Request a Show</a>
       <ul class="nav-links">
@@ -2301,13 +2313,13 @@
 
   <!-- ==== SECTION 3: HERO ==== -->
   <header class="hero" id="hero">
-    <video class="hero-video" autoplay loop muted playsinline preload="metadata" poster="media/frame.png">
+    <video class="hero-video" autoplay loop muted playsinline preload="metadata" fetchpriority="high" poster="media/frame.webp">
       <source src="media/pptpmaingif2.webm" type="video/webm">
       <source src="media/pptpmaingif2.mp4" type="video/mp4">
     </video>
        <div class="hero-content">
       <h1>A Timeless Tradition.</h1>
-      <p class="hero-subheadline">Hand-puppet theater traveling Utah since 1986 - from Ogden to Provo bringing wonder to your door.</p>
+      <p class="hero-subheadline">Hand-puppet theater traveling Utah since 1986 - from Ogden to Payson bringing wonder to your door.</p>
       <div class="hero-buttons">
         <a href="#contact" class="btn btn-primary">Request a Show</a>
         <a href="#shows" class="hero-text-link">Browse our shows &rarr;</a>
@@ -2338,13 +2350,19 @@
     <!-- ==== SECTION 5: THE TRANSFORMATION ==== -->
     <section class="transformation">
       <div class="transformation-content">
-<h2>A break from screens. A room full of <span class="accent">magic</span>.</h2>
+<h2>A break from screens.<br> A room full of <span class="accent">whimsy</span>.</h2>
         <div class="transformation-photos">
           <figure>
-            <img src="media/candid.jpg" alt="Kids laughing during a Puppet Players show" loading="lazy">
+            <picture>
+              <source type="image/webp" srcset="media/candid.webp">
+              <img src="media/candid.jpg" alt="Kids laughing during a Puppet Players show" loading="lazy" decoding="async">
+            </picture>
           </figure>
           <figure>
-            <img src="media/candid1.jpg" alt="Audience members enjoying a Puppet Players performance" loading="lazy">
+            <picture>
+              <source type="image/webp" srcset="media/candid1.webp">
+              <img src="media/candid1.jpg" alt="Audience members enjoying a Puppet Players performance" loading="lazy" decoding="async">
+            </picture>
           </figure>
         </div>
       </div>
@@ -2355,7 +2373,7 @@
       <div class="shows-content">
         <h2>Current Shows</h2>
         <p class="shows-subheading">One for every month of the year.</p>
-        <p class="shows-cost-line">$110 per show, anywhere from Ogden to Provo.</p>
+        <p class="shows-cost-line">$110 per show, anywhere from Ogden to Payson.</p>
 
         <div class="shows-carousel-wrapper">
           <button class="carousel-arrow carousel-arrow-left" id="showsPrev" aria-label="Previous shows">&#8592;</button>
@@ -2415,7 +2433,7 @@
             <h2 class="section-heading rozha">Meet The Puppet Players</h2>
 
             <div class="about-story-wrap">
-              <p class="about-story-preview">The Puppet Players began back in 1986 with the idea that puppet shows should be fun, creative, and accessible to all ages. We bring professional shows to elementary schools, libraries, daycares, preschools, birthday parties, churches, assisted living communities, and more - from Ogden to Provo. The colorful characters are hand puppets, and the stories are full of imagination, music, and meaningful lessons for every audience. Every show includes a hands-on portion where members of the audience get to participate and be part of the puppet fun.</p>
+              <p class="about-story-preview">The Puppet Players began back in 1986 with the idea that puppet shows should be fun, creative, and accessible to all ages. We bring professional shows to elementary schools, libraries, daycares, preschools, birthday parties, churches, assisted living communities, and more - from Ogden to Payson. The colorful characters are hand puppets, and the stories are full of imagination, music, and meaningful lessons for every audience. Every show includes a hands-on portion where members of the audience get to participate and be part of the puppet fun.</p>
             </div>
 
             <p class="about-stats-text">40 years touring Utah &middot; 60,000+ shows performed &middot; Every age, preschool to assisted living</p>
@@ -2577,7 +2595,7 @@
             </button>
             <div class="accordion-content" id="faq-panel-6">
               <div class="accordion-body">
-                We know things happen! We request a minimum of 24 hours before your show time to cancel or reschedule your puppet show. There is no cancellation fee, however, if a puppeteer shows up at a scheduled show without prior warning of cancellation from the client, the client will be charged 20% of the show price.
+                We know things happen! We request a minimum of 24 hours before your show time to cancel or reschedule your puppet show - no strings attached. There is no cancellation fee, however, if a puppeteer shows up at a scheduled show without prior warning of cancellation from the client, the client will be charged 20% of the show price.
                </div>
             </div>
           </div>
@@ -2601,7 +2619,7 @@
     <!-- ==== SECTION 11: FINAL CTA + CONTACT FORM ==== -->
     <section class="final-cta" id="contact">
       <div class="cta-content">
-        <h2>Pick a date - we'll do the rest.</h2>
+        <h2>Pick a date - we'll connect.</h2>
 
         <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
           <input type="hidden" name="access_key" value="42a7042d-dbdb-4511-9953-c790ecbe99e3">
@@ -2680,7 +2698,7 @@
     <div class="footer-content">
       <div class="footer-col">
         <div class="footer-logo">The Puppet Players</div>
-        <p class="footer-service-area">We perform in: Salt Lake City &middot; Sandy &middot; American Fork &middot; Orem &middot; Provo &middot; Riverton &middot; Tooele &middot; Ogden &middot; Layton &middot; Park City &middot; Heber &middot; And More!</p>
+        <p class="footer-service-area">We perform in: Salt Lake City &middot; Sandy &middot; American Fork &middot; Orem &middot; Payson &middot; Provo &middot; Riverton &middot; Tooele &middot; Ogden &middot; Layton &middot; Park City &middot; Heber &middot; And More!</p>
       </div>
 
       <div class="footer-col">
@@ -2689,7 +2707,6 @@
           <li><a href="#shows">Shows</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
           <li><a href="#contact">FAQ &amp; Booking</a></li>
-          <li><a href="mailto:info@puppetplayers.org">info@puppetplayers.org</a></li>
         </ul>
       </div>
 
@@ -2717,6 +2734,58 @@
   </footer>
 
   <script>
+    // ===== CRITICAL: nav, hamburger, fade-in — must run before first interaction =====
+    (function initCritical() {
+      // Sticky nav
+      var navbar = document.getElementById('navbar');
+      var _navSentinel = document.createElement('div');
+      _navSentinel.style.cssText = 'position:absolute;top:50px;left:0;width:1px;height:1px;pointer-events:none;';
+      document.body.prepend(_navSentinel);
+      new IntersectionObserver(function(entries) {
+        navbar.classList.toggle('scrolled', !entries[0].isIntersecting);
+      }, { rootMargin: '0px' }).observe(_navSentinel);
+
+      // Hamburger menu
+      var hamburger = document.getElementById('hamburgerBtn');
+      var mobileMenu = document.getElementById('mobileMenu');
+      hamburger.addEventListener('click', function() {
+        mobileMenu.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', mobileMenu.classList.contains('active') ? 'true' : 'false');
+      });
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+          mobileMenu.classList.remove('active');
+          hamburger.focus();
+        }
+      });
+      document.addEventListener('click', function(e) {
+        if (!mobileMenu.classList.contains('active')) return;
+        if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+          mobileMenu.classList.remove('active');
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Section fade-in observer
+      var fadeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      document.querySelectorAll('section').forEach(function(s) { fadeObserver.observe(s); });
+    })();
+
+    // ===== DEFERRED: carousel, modals, FAQ, form — safe to run after paint =====
+    function initDeferred() {
     // ===== ALL 12 SHOWS DATA =====
     const shows = [
       {
@@ -2793,70 +2862,9 @@
       }
     ];
 
-    // ===== STICKY NAVIGATION =====
-    const navbar = document.getElementById('navbar');
-    const hamburger = document.getElementById('hamburgerBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-
-    // IntersectionObserver sentinel - fires only when the 50px threshold is crossed, no scroll thrash
-    const _navSentinel = document.createElement('div');
-    _navSentinel.style.cssText = 'position:absolute;top:50px;left:0;width:1px;height:1px;pointer-events:none;';
-    document.body.prepend(_navSentinel);
-    new IntersectionObserver(function(entries) {
-      navbar.classList.toggle('scrolled', !entries[0].isIntersecting);
-    }, { rootMargin: '0px' }).observe(_navSentinel);
-
-    hamburger.addEventListener('click', function() {
-      mobileMenu.classList.toggle('active');
-      hamburger.setAttribute('aria-expanded', mobileMenu.classList.contains('active') ? 'true' : 'false');
-    });
-
-    // Close mobile menu on link click
-    const mobileLinks = mobileMenu.querySelectorAll('a');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', function() {
-        mobileMenu.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      });
-    });
-
     // Set date field minimum to today
     const dateInput = document.getElementById('date');
     if (dateInput) dateInput.min = new Date().toISOString().split('T')[0];
-
-    // Close mobile menu on Escape or outside-click
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
-        mobileMenu.classList.remove('active');
-        hamburger.focus();
-      }
-    });
-    document.addEventListener('click', function(e) {
-      if (!mobileMenu.classList.contains('active')) return;
-      if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
-        mobileMenu.classList.remove('active');
-        hamburger.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // ===== INTERSECTION OBSERVER FOR FADE-IN SECTIONS =====
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    document.querySelectorAll('section').forEach(section => {
-      observer.observe(section);
-    });
 
     // ===== SHOWS CAROUSEL (3 per page, 4 pages = 12 shows) =====
     const showsTrack = document.getElementById('showsTrack');
@@ -2870,18 +2878,27 @@
     let showsTimer;
 
     // Build page-divs based on current SHOWS_PER_PAGE.
+    // Uses a DocumentFragment so the entire carousel is appended in a single
+    // reflow rather than once per page — avoids a forced-reflow hot spot.
     function buildShowsCarousel() {
-      showsTrack.innerHTML = '';
-      for (let p = 0; p < TOTAL_PAGES; p++) {
+      // Read-then-write batching: cache once per build (no layout-forcing reads inside loop)
+      const perPage = SHOWS_PER_PAGE;
+      const totalPages = TOTAL_PAGES;
+      const frag = document.createDocumentFragment();
+      for (let p = 0; p < totalPages; p++) {
         const page = document.createElement('div');
         page.className = 'shows-page';
-        page.style.gridTemplateColumns = `repeat(${SHOWS_PER_PAGE}, 1fr)`;
-        shows.slice(p * SHOWS_PER_PAGE, (p + 1) * SHOWS_PER_PAGE).forEach(show => {
+        page.style.gridTemplateColumns = `repeat(${perPage}, 1fr)`;
+        shows.slice(p * perPage, (p + 1) * perPage).forEach(show => {
           const card = document.createElement('div');
           card.className = 'show-card';
+          // Derive WebP variant: replace .jpg/.jpeg/.png (case-insensitive) with .webp
+          const webpThumb = show.thumbnail
+            ? show.thumbnail.replace(/\.(jpe?g|png)$/i, '.webp')
+            : '';
           card.innerHTML = `
             ${show.thumbnail
-              ? `<div class="show-card-thumb"><img src="${show.thumbnail}" alt="${show.title}" loading="lazy" decoding="async"></div>`
+              ? `<div class="show-card-thumb"><picture><source type="image/webp" srcset="${webpThumb}"><img src="${show.thumbnail}" alt="${show.title}" loading="lazy" decoding="async"></picture></div>`
               : `<div class="show-card-thumb show-card-thumb--placeholder show-card-thumb--starburst">
                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="American flag">
                      <!-- Dark letterbox background (flag is 1.9:1, letterboxed in the square crop) -->
@@ -2980,19 +2997,25 @@
           `;
           page.appendChild(card);
         });
-        showsTrack.appendChild(page);
+        frag.appendChild(page);
       }
+      // Single DOM commit — replaces the entire track contents in one reflow
+      showsTrack.innerHTML = '';
+      showsTrack.appendChild(frag);
     }
 
     function buildShowsDots() {
-      showsDots.innerHTML = '';
-      for (let i = 0; i < TOTAL_PAGES; i++) {
+      const totalPages = TOTAL_PAGES;
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < totalPages; i++) {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('aria-label', 'Go to page ' + (i + 1));
         dot.addEventListener('click', () => { showsPage = i; updateShows(); resetShowsTimer(); });
-        showsDots.appendChild(dot);
+        frag.appendChild(dot);
       }
+      showsDots.innerHTML = '';
+      showsDots.appendChild(frag);
     }
 
     function updateShows() {
@@ -3207,18 +3230,7 @@
       });
       } // end init()
 
-      /* DOMContentLoaded guard - works regardless of script position in the file */
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-    })();
-
-    // ===== DYNAMIC COPYRIGHT YEAR =====
-    (function() {
-      var y = document.getElementById('footer-year');
-      if (y) y.textContent = new Date().getFullYear();
+      init();
     })();
 
     // ===== FAQ ACCORDION =====
@@ -3305,6 +3317,21 @@
         showFormError('Network error - please check your connection and try again.');
       }
     });
+
+    // ===== DYNAMIC COPYRIGHT YEAR =====
+    (function() {
+      var y = document.getElementById('footer-year');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
+
+    } // end initDeferred
+
+    // Run after the browser is idle (max 2s delay so it always fires)
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(initDeferred, { timeout: 2000 });
+    } else {
+      setTimeout(initDeferred, 100);
+    }
   </script>
 
 
