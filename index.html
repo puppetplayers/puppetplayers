@@ -10,14 +10,14 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="The Puppet Players | Puppet Shows for Utah Schools & Events">
   <meta property="og:description" content="Professional puppet shows for schools, libraries, assisted living, and events. 40 years performing, 60,000+ shows. $110, Ogden to Payson.">
-  <meta property="og:image" content="media/frame.png">
+  <meta property="og:image" content="https://puppetplayers.org/media/frame.webp">
   <meta property="og:url" content="https://puppetplayers.org">
 
   <!-- Twitter/X Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Puppet Players | Puppet Shows for Utah Schools & Events">
   <meta name="twitter:description" content="Professional puppet shows for schools, libraries, assisted living, and events across Utah. $110 per show.">
-  <meta name="twitter:image" content="media/frame.png">
+  <meta name="twitter:image" content="https://puppetplayers.org/media/frame.webp">
 
   <!-- LocalBusiness Schema -->
   <script type="application/ld+json">
@@ -250,11 +250,7 @@
         display: none;
       }
     }
-    @keyframes puppetBobMobile {
-      0%, 100% { transform: translateY(-50%) rotate(0deg); }
-      25%       { transform: translateY(calc(-50% - 4px)) rotate(-1deg); }
-      75%       { transform: translateY(calc(-50% - 2px)) rotate(1deg); }
-    }
+    /* puppetBobMobile keyframe removed — nav-characters is display:none on mobile */
 
     .h-captcha-wrapper {
       background: var(--tan, #f5efe6);
@@ -1873,15 +1869,7 @@
         display: none;
       }
 
-      .about-content {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .performer-shape {
-        max-width: 300px;
-        margin: 0 auto;
-      }
+      /* .about-content and .performer-shape removed — orphaned rules from old layout */
 
       .footer-content {
         grid-template-columns: 1fr;
@@ -2430,10 +2418,10 @@
     </section>
 
     <!-- Show Modal -->
-    <div class="modal-overlay" id="showModal">
+    <div class="modal-overlay" id="showModal" role="dialog" aria-modal="true" aria-labelledby="showModalTitle">
       <div class="modal">
         <button class="modal-close" id="modalClose" aria-label="Close modal">×</button>
-        <h2>All 12 Shows</h2>
+        <h2 id="showModalTitle">All 12 Shows</h2>
         <div class="modal-grid" id="modalShowsGrid"></div>
       </div>
     </div>
@@ -3175,7 +3163,7 @@
     const modalShowsGrid = document.getElementById('modalShowsGrid');
 
     function buildModalGrid() {
-      modalShowsGrid.innerHTML = '';
+      const frag = document.createDocumentFragment();
       shows.forEach(show => {
         const card = document.createElement('div');
         card.className = 'modal-show-card';
@@ -3186,31 +3174,33 @@
           </div>
           <p>${show.description}</p>
         `;
-        modalShowsGrid.appendChild(card);
+        frag.appendChild(card);
       });
+      modalShowsGrid.innerHTML = '';
+      modalShowsGrid.appendChild(frag);
     }
 
     buildModalGrid();
 
-    viewAllBtn.addEventListener('click', function() {
+    function openShowModal() {
       showModal.classList.add('active');
       showModal.scrollTop = 0;
-    });
-
-    modalClose.addEventListener('click', function() {
+      document.body.classList.add('modal-open');
+      modalClose.focus();
+    }
+    function closeShowModal() {
       showModal.classList.remove('active');
-    });
+      document.body.classList.remove('modal-open');
+      viewAllBtn.focus();
+    }
 
+    viewAllBtn.addEventListener('click', openShowModal);
+    modalClose.addEventListener('click', closeShowModal);
     showModal.addEventListener('click', function(e) {
-      if (e.target === showModal) {
-        showModal.classList.remove('active');
-      }
+      if (e.target === showModal) closeShowModal();
     });
-
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && showModal.classList.contains('active')) {
-        showModal.classList.remove('active');
-      }
+      if (e.key === 'Escape' && showModal.classList.contains('active')) closeShowModal();
     });
 
     // ===== TESTIMONIALS CAROUSEL - markup commented out; JS removed =====
