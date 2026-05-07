@@ -1995,11 +1995,12 @@
         0 22px 44px -18px rgba(0,0,0,0.55),
         0 4px 10px -4px rgba(0,0,0,0.35);
       position: relative;
-      transform: rotate(1.2deg);
+      /* translateZ(0) promotes to own GPU layer — prevents scroll ghosting on iOS Safari */
+      transform: rotate(1.2deg) translateZ(0);
       transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s ease;
     }
     .about-poster figure:hover {
-      transform: rotate(0deg) translateY(-4px) scale(1.015);
+      transform: rotate(0deg) translateY(-4px) scale(1.015) translateZ(0);
       box-shadow:
         0 30px 56px -20px rgba(0,0,0,0.6),
         0 6px 14px -4px rgba(0,0,0,0.4);
@@ -2028,6 +2029,7 @@
       object-fit: cover;
       border-radius: 2px;
       filter: saturate(1.05) contrast(1.02);
+      will-change: transform; /* own GPU layer prevents filter ghosting during scroll */
     }
 
     @media (max-width: 720px) {
@@ -2269,15 +2271,19 @@
     }
     @media (max-width: 600px) {
       .crew-bubble-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 0.5rem; padding: 0 0.5rem; justify-items: center; }
+      /* Explicit width = stage width so centering is unambiguous — no flex/auto-margin guessing */
+      .crew-card { width: min(160px, 43vw); }
       /* Clip at the stage level — correct boundary, avoids cutting curtain edges */
       /* display:block overrides flex — avoids iOS Safari flex+overflow:hidden centering bug */
       .crew-portrait-stage { width: min(160px, 43vw); padding-top: 18px; overflow: hidden; display: block; margin: 0 auto; }
       /* 100% = always matches stage width exactly, immune to pixel-rounding */
-      .curtain-frame { width: 100%; height: auto; aspect-ratio: 160 / 170; }
+      .curtain-frame { width: 100%; height: auto; aspect-ratio: 160 / 170;
+                       filter: none; } /* drop-shadow escapes overflow:hidden on iOS and causes scroll ghosting */
       .crew-bubble { display: block; margin: 0 auto; width: min(128px, calc(43vw * 0.8)); height: auto; aspect-ratio: 128 / 154; border-width: 3px; }
     }
     @media (max-width: 380px) {
       .crew-bubble-grid { gap: 1.5rem 0.25rem; padding: 0 0.25rem; }
+      .crew-card { width: min(146px, 43vw); }
       .crew-portrait-stage { width: min(146px, 43vw); padding-top: 16px; margin: 0 auto; }
       .crew-bubble { display: block; margin: 0 auto; width: min(116px, calc(43vw * 0.79)); aspect-ratio: 116 / 140; }
     }
